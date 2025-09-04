@@ -5,12 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Class } from '@/components/classes/ClassCard';
 import { Textarea } from '@/components/ui/textarea';
 
 interface ClassFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: Partial<Class>) => void;
   onCancel: () => void;
-  initialData?: any;
+  initialData?: Class;
 }
 
 export function ClassForm({ onSubmit, onCancel, initialData }: ClassFormProps) {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { ClassCard } from '@/components/classes/ClassCard';
+import { ClassCard, Class } from '@/components/classes/ClassCard';
 import { ClassForm } from '@/components/forms/ClassForm';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,7 @@ import { mockClasses } from '@/lib/data/mockData';
 export default function ClassesPage() {
   const [classes, setClasses] = useState(mockClasses);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingClass, setEditingClass] = useState(null);
+  const [editingClass, setEditingClass] = useState<Class | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('all');
 

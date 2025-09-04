@@ -5,6 +5,19 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+export interface Class {
+  id: string;
+  name: string;
+  trainer: string;
+  time: string;
+  duration: string;
+  participants: number;
+  capacity: number;
+  location: string;
+  difficulty: string;
+  category: string;
+}
+
 
 interface Class {
   id: string;
@@ -21,8 +34,8 @@ interface Class {
 
 interface ClassCardProps {
   classItem: Class;
-  onBook?: (classItem: Class) => void;
-  onEdit?: (classItem: Class) => void;
+  onBook: (classItem: Class) => void;
+  onEdit: (classItem: Class) => void;
 }
 
 export function ClassCard({ classItem, onBook, onEdit }: ClassCardProps) {
