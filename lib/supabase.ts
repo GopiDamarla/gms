@@ -1,21 +1,40 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 // Validate if we have real Supabase credentials
-const hasValidCredentials = supabaseUrl !== 'https://placeholder.supabase.co' && 
-                           supabaseAnonKey !== 'placeholder-key' &&
+const hasValidCredentials = supabaseUrl && 
+                           supabaseAnonKey &&
                            supabaseUrl.startsWith('https://') &&
                            supabaseAnonKey.length > 20;
 
-if (!hasValidCredentials) {
-  console.warn('Supabase credentials not configured. Using placeholder values. Please check your .env.local file.');
-}
+// Create a dummy client for when credentials are not configured
+const dummyClient = {
+  from: () => ({
+    select: () => Promise.resolve({ data: [], error: null }),
+    insert: () => Promise.resolve({ data: null, error: null }),
+    update: () => Promise.resolve({ data: null, error: null }),
+    delete: () => Promise.resolve({ data: null, error: null }),
+    upsert: () => Promise.resolve({ data: null, error: null }),
+  }),
+  rpc: () => Promise.resolve({ data: null, error: null }),
+  auth: {
+    signUp: () => Promise.resolve({ data: null, error: null }),
+    signIn: () => Promise.resolve({ data: null, error: null }),
+    signOut: () => Promise.resolve({ error: null }),
+  },
+};
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = hasValidCredentials 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : dummyClient as any;
+
 export const isSupabaseConfigured = hasValidCredentials;
 
+if (!hasValidCredentials) {
+  console.warn('Supabase credentials not configured. Using mock client. Please check your .env.local file.');
+}
 // Database types
 export interface MembershipPlan {
   id: string;
