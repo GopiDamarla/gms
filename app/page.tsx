@@ -9,7 +9,7 @@ import { UpcomingClasses } from '@/components/dashboard/UpcomingClasses';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Clock, CreditCard, Users } from 'lucide-react';
+import { TriangleAlert as AlertTriangle, Clock, CreditCard, Users } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 export default function Home() {
