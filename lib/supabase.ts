@@ -1,13 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase credentials not found. Please check your .env.local file.');
+// Validate if we have real Supabase credentials
+const hasValidCredentials = supabaseUrl !== 'https://placeholder.supabase.co' && 
+                           supabaseAnonKey !== 'placeholder-key' &&
+                           supabaseUrl.startsWith('https://') &&
+                           supabaseAnonKey.length > 20;
+
+if (!hasValidCredentials) {
+  console.warn('Supabase credentials not configured. Using placeholder values. Please check your .env.local file.');
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const isSupabaseConfigured = hasValidCredentials;
 
 // Database types
 export interface MembershipPlan {

@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TriangleAlert as AlertTriangle, Clock, CreditCard, Users } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export default function Home() {
   const [members, setMembers] = useState([]);
@@ -22,6 +22,13 @@ export default function Home() {
   }, []);
 
   const checkDatabaseConnection = async () => {
+    // Skip database check if Supabase is not configured
+    if (!isSupabaseConfigured) {
+      setDbConnected(false);
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data, error } = await supabase.from('members').select('count').limit(1);
       if (error) {
